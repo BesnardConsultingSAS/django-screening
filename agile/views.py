@@ -3,8 +3,8 @@ from rest_framework import (
     viewsets,
 )
 
-from agile.models import Agile
-from agile.serializers import AgileSerializer
+from .models import Agile
+from .serializers import AgileSerializer
 
 
 class IsAuthenticated(permissions.BasePermission):

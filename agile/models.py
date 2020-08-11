@@ -4,6 +4,16 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class AgileManager(models.Manager):
+    def get_or_none(self, **kwargs):
+        """
+        Like the standard ``.get()`` except it returns ``None`` rather than
+        raising a ``DoesNotExist` exception.
+        """
+        try:
+            return self.get(**kwargs)
+        except self.model.DoesNotExist:
+            return None
+
     def get_values(self) -> "QuerySet[Agile]":
         return self.filter(type=Agile.TYPE_VALUE)
 

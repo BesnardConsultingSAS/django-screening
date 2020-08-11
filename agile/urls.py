@@ -1,10 +1,13 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
-from agile.views import AgileViewSet
+from .views import AgileViewSet
+
+app_name = "agile"
+
 
 router = DefaultRouter()
-router.register("", AgileViewSet)
+router.register("agile", AgileViewSet)
 
 
 urlpatterns = [
