@@ -6,6 +6,9 @@ from rest_framework import (
 from .models import Agile
 from .serializers import AgileSerializer
 
+from django_filters import rest_framework as filters
+from agile.filters import AgileFilter
+
 
 class IsAuthenticated(permissions.BasePermission):
     def has_permission(self, request, view) -> bool:
@@ -26,3 +29,5 @@ class AgileViewSet(viewsets.ModelViewSet):
     queryset = Agile.objects.all()
     serializer_class = AgileSerializer
     permission_classes = (IsAuthenticated,)
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = AgileFilter
