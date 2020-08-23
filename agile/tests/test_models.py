@@ -21,7 +21,7 @@ class TestAgileMethod:
     def test_get_or_none_found(self):
         """Tests expected Agile instance."""
         AgileFactory.create_batch(7)
-        assert isinstance(Agile.objects.get_or_none(id=1), Agile)
+        assert isinstance(Agile.objects.get_or_none(id=Agile.objects.last().id), Agile)
 
     def test_get_or_none(self):
         """Tests expects none."""

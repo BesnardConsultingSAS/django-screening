@@ -2,6 +2,8 @@ from django.db import models
 from django.db.models.query import QuerySet
 from django.utils.translation import ugettext_lazy as _
 
+import uuid
+
 
 class AgileManager(models.Manager):
     def get_or_none(self, **kwargs):
@@ -28,6 +30,9 @@ class Agile(models.Model):
     AGILE_TYPES_CHOICES = (
         (TYPE_VALUE, "Value"),
         (TYPE_PRINCIPLE, "Principle"),
+    )
+    id = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, serialize=False, editable=False
     )
     name = models.CharField(_("agile value/principle name"), max_length=100)
     description = models.TextField(
