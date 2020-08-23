@@ -1,6 +1,5 @@
 import pytest
 
-from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
 
@@ -45,7 +44,6 @@ class TestAgileViews:
             "payload": payload,
         }
 
-
     def test_unauthenticated_list_view(self, client):
         """Tests get request are allowed for unauthenticated Users."""
         url = reverse("agile-list")
@@ -67,19 +65,25 @@ class TestAgileViews:
 
     def test_unauthenticated_post(self, client):
         """Tests post request creates a Agile instance."""
-        resp = client.post("/agile/", {
-            "name": "Working product over comprehensive documentation",
-            "description": "The Agile values dictate that the first and foremost duty",
-        })
+        resp = client.post(
+            "/agile/",
+            {
+                "name": "Working product over comprehensive documentation",
+                "description": "The Agile values dictate that the first and foremost duty",
+            },
+        )
         assert resp.status_code == status.HTTP_403_FORBIDDEN
 
     def test_post_type_value(self, logged_in_client):
         """Tests post request creates a Value instance."""
-        resp = logged_in_client.post("/agile/", {
-            "name": "Working product over comprehensive documentation",
-            "description": "The Agile values dictate that the first and foremost duty",
-            "type": Agile.TYPE_VALUE
-        })
+        resp = logged_in_client.post(
+            "/agile/",
+            {
+                "name": "Working product over comprehensive documentation",
+                "description": "The Agile values dictate that the first and foremost duty",
+                "type": Agile.TYPE_VALUE,
+            },
+        )
         assert resp.status_code == status.HTTP_201_CREATED
         agile = Agile.objects.get(id=resp.json()["id"])
         assert agile.type == Agile.TYPE_VALUE
@@ -87,20 +91,28 @@ class TestAgileViews:
     def test_post_type_principle(self, logged_in_client):
         """Tests post request creates a Value instance."""
         url = reverse("agile-list")
-        resp = logged_in_client.post(url, {
-            "name": "Working product over comprehensive documentation",
-            "description": "The Agile values dictate that the first and foremost duty","type": Agile.TYPE_PRINCIPLE
-        })
+        resp = logged_in_client.post(
+            url,
+            {
+                "name": "Working product over comprehensive documentation",
+                "description": "The Agile values dictate that the first and foremost duty",
+                "type": Agile.TYPE_PRINCIPLE,
+            },
+        )
         assert resp.status_code == status.HTTP_201_CREATED
         agile = Agile.objects.get(id=resp.json()["id"])
         assert agile.type == Agile.TYPE_PRINCIPLE
 
     def test_unauthenticated_patch(self, client, agile_value):
         """Tests post request creates a Agile instance."""
-        resp = client.patch(f"/agile/{agile_value.id}/", {
-            "name": "Working product over comprehensive documentation",
-            "description": "The Agile values dictate that the first and foremost duty","type": Agile.TYPE_PRINCIPLE
-        })
+        resp = client.patch(
+            f"/agile/{agile_value.id}/",
+            {
+                "name": "Working product over comprehensive documentation",
+                "description": "The Agile values dictate that the first and foremost duty",
+                "type": Agile.TYPE_PRINCIPLE,
+            },
+        )
         assert resp.status_code == status.HTTP_403_FORBIDDEN
 
     def test_patch(self, logged_in_client, agile_value):
@@ -113,10 +125,14 @@ class TestAgileViews:
 
     def test_unauthenticated_put(self, client, agile_value):
         """Tests post request creates a Agile instance."""
-        resp = client.put(f"/agile/{agile_value.id}/",{
-            "name": "Working product over comprehensive documentation",
-            "description": "The Agile values dictate that the first and foremost duty","type": Agile.TYPE_PRINCIPLE
-        })
+        resp = client.put(
+            f"/agile/{agile_value.id}/",
+            {
+                "name": "Working product over comprehensive documentation",
+                "description": "The Agile values dictate that the first and foremost duty",
+                "type": Agile.TYPE_PRINCIPLE,
+            },
+        )
         assert resp.status_code == status.HTTP_403_FORBIDDEN
 
     def test_put(self, logged_in_client, agile_value):

@@ -1,7 +1,5 @@
 import pytest
 
-from django.test import TestCase
-
 from typing import Dict
 
 from agile.models import Agile
@@ -19,9 +17,9 @@ class TestAgileSerializer:
         return {
             "page": agile_fixture,
             "data": {
-            "name": "Responding to change over following a plan.",
-            "description": "Circumstances change and sometimes customers demand extra.",
-        },
+                "name": "Responding to change over following a plan.",
+                "description": "Circumstances change and sometimes customers demand extra.",
+            },
         }
 
     def test_valid(self, default_value):
